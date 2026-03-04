@@ -9,7 +9,7 @@ services:
     networks:
       - retail-network
     environment:
-      - DB_HOST=mysqldb
+      - DB_HOST=mysql
       - DB_USER=capsule_user
       - DB_PASSWORD=secure_password_123
       - DB_NAME=capsule_db
@@ -19,13 +19,13 @@ services:
   
   database:
     image: mysql:8.0
-    container_name: mysqldb
+    container_name: mysql
     ports:
       - "3306:3306"
     networks:
       - retail-network
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=rootpassword123
       - MYSQL_DATABASE=capsule_db
       - MYSQL_USER=capsule_user
       - MYSQL_PASSWORD=rootpassword123  
