@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  retail-web:
+    image: praveenx03/retail:v1.2.0
+    container_name: Retail
+    ports:
+      - "3017:3000"
+    networks:
+      - retail-network
+    environment:
+      - DB_HOST=mysqldb
+      - DB_USER=capsule_user
+      - DB_PASSWORD=secure_password_123
+      - DB_NAME=capsule_db
+      - DB_PORT=3306 
+    depends_on:
+      - "database"
+  
+  database:
+    image: mysql:8.0
+    container_name: mysqldb
+    ports:
+      - "3306:3306"
+    networks:
+      - retail-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=capsule_db
+      - MYSQL_USER=capsule_user
+      - MYSQL_PASSWORD=rootpassword123  
+    volumes:
+      - "Mysqldata:/var/lib/mysql"
+
+networks:
+  retail-network:
+
+volumes:
+  Mysqldata:
