@@ -1,39 +1,45 @@
 version: '3.8'
-
+ 
 services:
-  retail-web:
-    image: praveenx03/retail:v1.2.0
-    container_name: Retail
+ 
+  retail-web-app:
+    image: nmc9812/retailv1.1.0
+    container_name: retailapp
     ports:
-      - "3017:3000"
+      - "3001:3000"
     networks:
-      - retail-network
+      - mynet
     environment:
       - DB_HOST=mysql
       - DB_USER=capsule_user
       - DB_PASSWORD=secure_password_123
       - DB_NAME=capsule_db
-      - DB_PORT=3306 
+      - DB_PORT=3306
+      - LOW_STOCK_THRESHOLD=5
+      - HIGH_STOCK_THRESHOLD=15
+    volumes:
+      - .:/usr/src/app
     depends_on:
-      - "database"
-  
-  database:
+      - mysql-server
+ 
+  mysql-server:
     image: mysql:8.0
     container_name: mysql
     ports:
       - "3306:3306"
     networks:
-      - retail-network
+      - mynet
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword123
       - MYSQL_DATABASE=capsule_db
       - MYSQL_USER=capsule_user
-      - MYSQL_PASSWORD=rootpassword123  
+      - MYSQL_PASSWORD=secure_password_123
     volumes:
-      - "Mysqldata:/var/lib/mysql"
-
-networks:
-  retail-network:
-
+      - mysql:/var/lib/mysql
+ 
 volumes:
-  Mysqldata:
+  mysql:
+ 
+networks:
+  mynet:
+ 
